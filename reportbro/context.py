@@ -1,7 +1,7 @@
 from babel.numbers import format_decimal
 from babel.dates import format_datetime
 from collections import namedtuple
-from simpleeval import simple_eval, NameNotDefined, FunctionNotDefined
+from simpleeval import simple_eval, NameNotDefined, FunctionNotDefined, ModuleWrapper
 from simpleeval import DEFAULT_NAMES as EVAL_DEFAULT_NAMES
 from simpleeval import DEFAULT_FUNCTIONS as EVAL_DEFAULT_FUNCTIONS
 from typing import List, Optional
@@ -37,7 +37,6 @@ class Context:
         self.eval_functions = EVAL_DEFAULT_FUNCTIONS.copy()
         self.eval_functions.update(
             decimal=decimal.Decimal,
-            datetime=datetime,
             format_datetime=self.format_datetime_func,
             format_decimal=self.format_decimal_func,
             len=len,
@@ -255,6 +254,7 @@ class Context:
         if expr:
             try:
                 data = dict(EVAL_DEFAULT_NAMES)
+                data.update({"datetime": ModuleWrapper(datetime)})
                 expr = self.replace_parameters(expr, data=data)
                 return simple_eval(expr, names=data, functions=self.eval_functions)
             except NameNotDefined as ex:
