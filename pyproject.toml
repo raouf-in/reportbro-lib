@@ -37,7 +37,7 @@ python-barcode = "^0.15.1"
 reportbro-fpdf2 = "^2.8.2"
 # reportbro-fpdf2 = { path = "../fpdf2/", develop = true}
 simpleeval = "^1.0.5"
-Pillow = "^10.2.0"
+Pillow = "^12.1.1"
 qrcode = "^7.4.2"
 XlsxWriter = "^3.0.3"
 
